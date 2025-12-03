@@ -14,8 +14,8 @@
             {
                 Console.Clear();
                 Console.WriteLine("Elija una opción:");
-                Console.WriteLine("A.- 1 de Diciembre (Parte 1)");
-                Console.WriteLine("B.- 1 de Diciembre (Parte 2)");
+                Console.WriteLine("1.- 1 de Diciembre (Parte 1)");
+                Console.WriteLine("2.- 1 de Diciembre (Parte 2)");
                 bool seleccionado = false;
 
                 while (!seleccionado) {
@@ -28,8 +28,8 @@
                     seleccionado = true;
                     switch (input.ToUpperInvariant())
                     {
-                        case "A": Diciembre_1_A(false); break;
-                        case "B": Diciembre_1_A(true); break;
+                        case "1": Diciembre_1(false); break;
+                        case "2": Diciembre_1(true); break;
                         default:
                             Console.WriteLine("Input no válido");
                             seleccionado = false;
@@ -38,7 +38,7 @@
                 }
             }
         }
-        static void Diciembre_1_A (bool considerarRotaciones)
+        static void Diciembre_1 (bool considerarRotaciones)
         {
             Console.Clear();
             if (considerarRotaciones)
