@@ -68,9 +68,13 @@ namespace Advent2025
 
                         //Console.WriteLine($"{j}");
                         bool esInvalido = false;
+                        bool solo2Veces = true;
+
                         for (int k = 1; k < largo && !esInvalido; k++)
                         {
                             if (largo % k != 0)
+                                continue;
+                            if (solo2Veces && (largo % 2 != 0 || k != largo / 2))
                                 continue;
                             //Console.WriteLine($"  k:{k}");
                             string inicial = texto.Substring(0, k);
@@ -80,7 +84,6 @@ namespace Advent2025
                                 string subPatron = texto.Substring(l * k, k);
                                 if (!inicial.Equals(subPatron))
                                     patronEsIgual = false;
-                                //Console.WriteLine($"     l:{l}");
                                 //Console.WriteLine($"    l:{l}, inicial:{inicial}, substr:{subPatron},");
                             }
                             if (patronEsIgual)
