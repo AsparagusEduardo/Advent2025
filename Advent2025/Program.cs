@@ -15,6 +15,7 @@
                 Console.Clear();
                 Console.WriteLine("Elija una opción:");
                 Console.WriteLine("A.- 1 de Diciembre (Parte 1)");
+                Console.WriteLine("B.- 1 de Diciembre (Parte 2)");
                 bool seleccionado = false;
 
                 while (!seleccionado) {
@@ -27,7 +28,8 @@
                     seleccionado = true;
                     switch (input.ToUpperInvariant())
                     {
-                        case "A": Diciembre_1_A(); break;
+                        case "A": Diciembre_1_A(false); break;
+                        case "B": Diciembre_1_A(true); break;
                         default:
                             Console.WriteLine("Input no válido");
                             seleccionado = false;
@@ -36,42 +38,56 @@
                 }
             }
         }
-        static void Diciembre_1_A ()
+        static void Diciembre_1_A (bool considerarRotaciones)
         {
             Console.Clear();
-            Console.WriteLine("Diciembre 1 (Parte 1): Presione Enter para leer documento.");
+            if (considerarRotaciones)
+                Console.WriteLine("Diciembre 1 (Parte 2): Presione Enter para leer documento.");
+            else
+                Console.WriteLine("Diciembre 1 (Parte 1): Presione Enter para leer documento.");
 
             Console.ReadLine();
 
             int posicion = 50;
             int cantVecesCero = 0;
 
+            Console.WriteLine($"pos:{posicion}");
+
             foreach (string line in File.ReadLines("res/dec1Ainput.txt"))
             {
-                Console.WriteLine($"{line}");
-
                 int cantidadGiro = int.Parse(line.Substring(1, line.Length - 1));
                 switch (line[0])
                 {
                     case 'L':
-                        posicion -= cantidadGiro;
+                        while (cantidadGiro != 0)
+                        {
+                            cantidadGiro--;
+                            posicion--;
+                            if (posicion == 0 && considerarRotaciones)
+                                cantVecesCero++;
+                            else if (posicion < 0)
+                                posicion = 99;
+                        }
                         break;
                     case 'R':
-                        posicion += cantidadGiro;
+                        while (cantidadGiro != 0)
+                        {
+                            cantidadGiro--;
+                            posicion++;
+                            if (posicion == 100)
+                            {
+                                posicion = 0;
+                                if (considerarRotaciones)
+                                    cantVecesCero++;
+                            }
+                        }
                         break;
                 }
-                while (posicion < 0)
-                {
-                    posicion += 100;
-                }
-                while (posicion > 99)
-                {
-                    posicion -= 100;
-                }
-                if (posicion == 0)
+                if (posicion == 0 && !considerarRotaciones)
                 {
                     cantVecesCero++;
                 }
+                Console.WriteLine($"{line},pos:{posicion},cant:{cantVecesCero}");
             }
 
             Console.WriteLine($"La cantidad de puntos cero son: {cantVecesCero}.");
