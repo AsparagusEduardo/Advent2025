@@ -39,14 +39,43 @@
         static void Diciembre_1_A ()
         {
             Console.Clear();
-            Console.WriteLine("Diciembre 1 (Parte 1):");
+            Console.WriteLine("Diciembre 1 (Parte 1): Presione Enter para leer documento.");
+
             Console.ReadLine();
-            //bool running = true;
-            //
-            //while (running)
-            //{
-            //
-            //}
+
+            int posicion = 50;
+            int cantVecesCero = 0;
+
+            foreach (string line in File.ReadLines("res/dec1Ainput.txt"))
+            {
+                Console.WriteLine($"{line}");
+
+                int cantidadGiro = int.Parse(line.Substring(1, line.Length - 1));
+                switch (line[0])
+                {
+                    case 'L':
+                        posicion -= cantidadGiro;
+                        break;
+                    case 'R':
+                        posicion += cantidadGiro;
+                        break;
+                }
+                while (posicion < 0)
+                {
+                    posicion += 100;
+                }
+                while (posicion > 99)
+                {
+                    posicion -= 100;
+                }
+                if (posicion == 0)
+                {
+                    cantVecesCero++;
+                }
+            }
+
+            Console.WriteLine($"La cantidad de puntos cero son: {cantVecesCero}.");
+            Console.ReadLine();
         }
     }
 }
